@@ -13,12 +13,12 @@ def post_view(pid):
         
 # Create your views here.
 def blog_view(request):
-    posts = Post.objects.filter(published_date__lte=now)
+    posts = Post.objects.filter(published_date__lte=now,status=True)
     context = {'posts':posts}
     return render(request,'blog/blog-home.html',context)
 
 def blog_single(request,pid):
-    post = get_object_or_404(Post,id=pid)
+    post = get_object_or_404(Post,id=pid, status=True, published_date__lte=now)
     context = {'post':post}
     post_view(pid)
     return render(request,'blog/blog-single.html',context)
