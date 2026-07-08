@@ -4494,3 +4494,10 @@ body.mobile-nav-active #mobile-nav-toggle {
 .footer-text a, .footer-text i {
   color: #f8b600;
 }
+
+
+.thumb img{
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+}
