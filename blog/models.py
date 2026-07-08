@@ -26,3 +26,5 @@ class Post(models.Model):
         ordering = ['published_date']
     def __str__(self):
       return  "{} - {}".format(self.title,self.id)
+    
+
