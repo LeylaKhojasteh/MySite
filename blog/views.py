@@ -48,5 +48,16 @@ def blog_category(request,cat_name):
     return render(request,'blog/blog-home.html',context)
 
 
+
+def blog_search(request):
+    posts = Post.objects.filter(status=True)
+    if request.method == 'GET':
+        if s:= request.GET.get('s'):
+            posts = posts.filter(content__contains=s)  
+
+    context = {'posts':posts}
+    return render(request,'blog/blog-home.html',context)
+
+
 def test(request):
     return render(request,'test.html')
