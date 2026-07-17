@@ -8,9 +8,15 @@
     <title>TEST</title>
 </head>
 <body>
-    <h1>testing page</h1>
-    <p>test: </p>
-    {% popularposts %}
+    <h1>testing Form:</h1>
+    <form action="{% url 'website:test' %}" method="post">
+        {% csrf_token %}
+        <label>name:</label>
+        <input name="name" type="text">
+        <button type="submit">submit</button>
+
+    </form>
+    
       
 </body>
 </html>
