@@ -1,3 +1,5 @@
+from dataclasses import fields
+
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from website.forms import NameForm,ContactForm, NewsletterForm
@@ -14,10 +16,13 @@ def contact_view(request):
     if request.method == 'POST':
         form = ContactForm(request.POST)
         if form.is_valid():
-            form.save()
-            messages.add_message(request, messages.SUCCESS, 'Your message has been sent successfully.')
+            contact = form.save(commit=False)
+            contact.name = 'unknown'
+            contact.save()
+
+            messages.add_message(request, messages.SUCCESS, 'Your message has submitted successfully!')
         else: 
-            messages.add_message(request,messages.ERROR,'your ticket didnt submitted')
+            messages.add_message(request,messages.ERROR,'your ticket didnt submitted.... please try again')
     form = ContactForm()
     return render(request,'website/contact.html',{'form':form})
 

@@ -16,7 +16,6 @@ class ContactForm(forms.ModelForm):
         fields = '__all__'
 
 
-
 class NewsletterForm(forms.ModelForm):
 
     class Meta:
