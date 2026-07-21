@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'debug_toolbar',
     'robots',
     'taggit',
+    'captcha',
     'django_extensions',
     'django_summernote',
 
