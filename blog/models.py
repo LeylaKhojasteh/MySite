@@ -33,6 +33,10 @@ class Post(models.Model):
     def get_absolute_url(self):
         return reverse('blog:single', kwargs={'pid': self.id})
 
+    @property
+    def approved_comments_count(self):
+        return self.comment_set.filter(approved=True).count()
+
 
 
 class Comment(models.Model):
@@ -44,5 +48,10 @@ class Comment(models.Model):
    approved = models.BooleanField(default=False)
    created_date = models.DateTimeField(auto_now_add=True)
    updated_date = models.DateTimeField(auto_now=True)
+
+   class Meta:
+        ordering = ['-created_date']
+   def __str__(self):
+        return  self.name
    
    
