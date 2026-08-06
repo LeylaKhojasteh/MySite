@@ -1,9 +1,11 @@
-from django.shortcuts import render,get_object_or_404
+from django.shortcuts import render,get_object_or_404,redirect
 from blog.models import Post,Comment
 from django.utils import timezone
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from blog.forms import CommentForm
 from django.contrib import messages
+from django.urls import reverse
+from django.http import HttpResponseRedirect
 
 now= timezone.now()
 
@@ -51,20 +53,22 @@ def blog_single(request,pid):
     post_view(pid)
     post = get_object_or_404(Post,id=pid, status=True, published_date__lte=now)
     posts = list(Post.objects.filter(status=True))
-    comments = Comment.objects.filter(post=post.id,approved=True)
-    form = CommentForm()
-    prv_post = None
-    nxt_post = None
-    index = posts.index(post)
-    if (index>0):
-        prv_post = posts[index-1]
-    if(index < len(posts)-1):
-         nxt_post = posts[index+1]
+    if not post.login_require:
+        comments = Comment.objects.filter(post=post.id,approved=True)
+        form = CommentForm()
+        prv_post = None
+        nxt_post = None
+        index = posts.index(post)
+        if (index>0):
+            prv_post = posts[index-1]
+        if(index < len(posts)-1):
+            nxt_post = posts[index+1]
 
-    context = {'post':post,'prv':prv_post,'nxt':nxt_post,'comments':comments,'form':form}
+        context = {'post':post,'prv':prv_post,'nxt':nxt_post,'comments':comments,'form':form}
 
-    return render(request,'blog/blog-single.html',context)
-
+        return render(request,'blog/blog-single.html',context)
+    else:
+        return HttpResponseRedirect(reverse('accounts:login'))
 
 def blog_category(request,cat_name):
     posts = Post.objects.filter(status=True)
