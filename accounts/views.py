@@ -20,7 +20,8 @@ def login_view(request):
                 if user is not None:
                     login(request,user)
                     return redirect('/')
-        form = CustomAuthenticationForm(request)    
+        else:
+            form = CustomAuthenticationForm(request)
         context = {'form': form}
         return render(request,'accounts/login.html',context)
     else:

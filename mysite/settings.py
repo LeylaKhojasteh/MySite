@@ -45,6 +45,10 @@ INSTALLED_APPS = [
 ]
 
 
+DEBUG = True
+
+ALLOWED_HOSTS = []
+
 #robots
 ROBOTS_USE_HOST = True
 ROBOTS_USE_SITEMAP = True
